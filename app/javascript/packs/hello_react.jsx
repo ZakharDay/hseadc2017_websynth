@@ -4,32 +4,43 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 
-const Hello = props => <div>Hello {props.name}!</div>
-
-Hello.defaultProps = {
-  name: 'David'
+function callServer(id) {
+  fetch(`http://localhost:3000/api/fxes/${id}.json`)
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      console.log(data)
+    })
 }
 
-Hello.propTypes = {
-  name: PropTypes.string
+const Fx = props => {
+  console.log(props)
+
+  return (
+    <div>
+      <div onClick={() => callServer(props.id)}>{props.name}</div>
+    </div>
+  )
 }
 
-fetch('http://localhost:3000/api/synthroom/index.json')
-  .then(response => {
-    return response.json()
+const Rack = props => {
+  // let fxElements = []
+
+  let fxElements = props.fxes.map(function(fx, i) {
+    return <Fx {...fx} key={i} />
   })
-  .then(data => {
-    console.log(data)
-  })
+
+  return <div>{fxElements}</div>
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   let props = document.getElementsByTagName('div')[0].dataset.props
-  let testContent = JSON.parse(props).test
+  let testContent = JSON.parse(props)
 
   ReactDOM.render(
-    <Hello name={testContent} />,
+    <Rack fxes={testContent} />,
     document.body.appendChild(document.createElement('div'))
   )
 })

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
     get 'synthroom/index'
+    resources :fxes
   end
 
   get 'synthroom/index'
