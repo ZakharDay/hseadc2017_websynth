@@ -16,9 +16,20 @@ Hello.propTypes = {
   name: PropTypes.string
 }
 
+fetch('http://localhost:3000/api/synthroom/index.json')
+  .then(response => {
+    return response.json()
+  })
+  .then(data => {
+    console.log(data)
+  })
+
 document.addEventListener('DOMContentLoaded', () => {
+  let props = document.getElementsByTagName('div')[0].dataset.props
+  let testContent = JSON.parse(props).test
+
   ReactDOM.render(
-    <Hello name="React" />,
+    <Hello name={testContent} />,
     document.body.appendChild(document.createElement('div'))
   )
 })
