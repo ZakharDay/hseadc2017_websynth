@@ -15,6 +15,50 @@ function callServer(id) {
     })
 }
 
+function analyseTemperature(e) {
+  console.log(e)
+
+  let data = {
+    city: e.target.value
+  }
+
+  fetch('http://localhost:3000/api/temperature_analyser/analyse', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data)
+    })
+    .catch(error => {
+      console.error('Error:', error)
+    })
+}
+
+function analyseTemperatureFromButton(city) {
+  let data = {
+    city: city
+  }
+
+  fetch('http://localhost:3000/api/temperature_analyser/analyse', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data)
+    })
+    .catch(error => {
+      console.error('Error:', error)
+    })
+}
+
 const Fx = props => {
   console.log(props)
 
@@ -32,7 +76,20 @@ const Rack = props => {
     return <Fx {...fx} key={i} />
   })
 
-  return <div>{fxElements}</div>
+  return (
+    <div>
+      <div>{fxElements}</div>
+      <input onChange={analyseTemperature} />
+
+      <button onClick={() => analyseTemperatureFromButton('sanfrancisco')}>
+        San Francisco
+      </button>
+
+      <button onClick={() => analyseTemperatureFromButton('nyc')}>
+        New York City
+      </button>
+    </div>
+  )
 }
 
 document.addEventListener('DOMContentLoaded', () => {
