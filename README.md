@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+APIs https://www.weatherbit.io/api
 
-Things you may want to cover:
+API we use https://www.weatherbit.io/api/weather-forecast-16-day
 
-* Ruby version
+Cities https://www.weatherbit.io/api/meta
 
-* System dependencies
+### Client-Server Interaction
 
-* Configuration
+https://en.wikipedia.org/wiki/WebSocket
 
-* Database creation
+https://en.wikipedia.org/wiki/Duplex_(telecommunications)#FULL-DUPLEX
 
-* Database initialization
+https://guides.rubyonrails.org/action_cable_overview.html
 
-* How to run the test suite
+https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+https://redis.io/

@@ -10,17 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_160840) do
+ActiveRecord::Schema.define(version: 2020_04_28_115321) do
+
+  create_table "cities", force: :cascade do |t|
+    t.integer "weatherbit_city_id"
+    t.string "name"
+    t.string "state_code"
+    t.string "country_code"
+    t.string "country_full"
+    t.float "lat"
+    t.float "lon"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "search_name"
+  end
 
   create_table "fxes", force: :cascade do |t|
     t.string "name"
     t.integer "volume", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

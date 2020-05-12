@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   namespace :api, format: :json do
     get 'synthroom/index'
     resources :fxes
-    post 'temperature_analyser/analyse'
+    get 'temperature_analyser/analyse/:city', controller: 'temperature_analyser', action: 'analyse'
+    get 'temperature_analyser/find_cities', controller: 'temperature_analyser', action: 'find_cities'
   end
 
   get 'synthroom/index'
