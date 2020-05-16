@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ActionCable } from 'react-actioncable-provider'
 import Oscillator from '../components/Oscillator'
 let unmuteAudio = require('unmute-ios-audio')
 
@@ -30,9 +31,12 @@ export default class SynthContainer extends Component {
     this.prepareSynthForRender = this.prepareSynthForRender.bind(this)
 
     this.removeSynth = this.removeSynth.bind(this)
+    this.removeSynthFromState = this.removeSynthFromState.bind(this)
     this.startSynth = this.startSynth.bind(this)
     this.stopSynth = this.stopSynth.bind(this)
     this.changeFrequency = this.changeFrequency.bind(this)
+
+    this.handleReceivedOscillator = this.handleReceivedOscillator.bind(this)
   }
 
   componentDidMount() {
@@ -155,9 +159,9 @@ export default class SynthContainer extends Component {
         oscillator: { frequency: frequency, uuid: uuid }
       })
     })
-      .then(response => response.json())
+      // .then(response => response.json())
       .then(data => {
-        console.log('Success:', data)
+        // console.log('Success:', data)
 
         oscillators = this.state.oscillators
 
@@ -194,7 +198,10 @@ export default class SynthContainer extends Component {
     let oscillator = audioContext.createOscillator()
 
     oscillator.type = 'square'
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
+    oscillator.frequency.setValueAtTime(
+      Math.floor(frequency),
+      Math.floor(audioContext.currentTime)
+    )
 
     oscillators[uuid] = {
       id: id,
@@ -223,19 +230,36 @@ export default class SynthContainer extends Component {
       } //,
       // body: JSON.stringify(data)
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data)
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Success:', data)
+    // })
+    // .catch(error => {
+    //   console.error('Error:', error)
+    // })
 
     delete oscillators[uuid]
 
     this.setState({
       oscillators
     })
+  }
+
+  removeSynthFromState(uuid) {
+    let { oscillators } = this.state
+    let oscillator = oscillators[uuid]
+
+    if (oscillator != undefined) {
+      if (oscillator.connected == true) {
+        this.stopSynth(uuid)
+      }
+
+      delete oscillators[uuid]
+
+      this.setState({
+        oscillators
+      })
+    }
   }
 
   startSynth(uuid) {
@@ -283,6 +307,27 @@ export default class SynthContainer extends Component {
     return str
   }
 
+  handleReceivedOscillator(oscillatorData) {
+    console.log('received', oscillatorData)
+
+    if (typeof oscillatorData == 'string') {
+      oscillatorData = JSON.parse(oscillatorData)
+
+      if (oscillatorData.id == undefined) {
+        this.removeSynthFromState(oscillatorData.uuid)
+      } else {
+        this.prepareSynthForRender(oscillatorData)
+      }
+    }
+  }
+
+  // handleReceivedConversation = response => {
+  //   const { conversation } = response
+  //   this.setState({
+  //     conversations: [...this.state.conversations, conversation]
+  //   })
+  // }
+
   render() {
     const { oscillators } = this.state
     let oscillatorElements = []
@@ -309,6 +354,11 @@ export default class SynthContainer extends Component {
 
     return (
       <div>
+        <ActionCable
+          channel={{ channel: 'OscillatorsChannel' }}
+          onReceived={this.handleReceivedOscillator}
+        />
+
         <div onClick={this.handleCreateSynthClick}>+ Create Synth</div>
         <div className="SynthContainer">{oscillatorElements}</div>
       </div>
