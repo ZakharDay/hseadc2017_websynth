@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_115321) do
+ActiveRecord::Schema.define(version: 2020_05_12_112929) do
 
   create_table "cities", force: :cascade do |t|
     t.integer "weatherbit_city_id"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(version: 2020_04_28_115321) do
   create_table "fxes", force: :cascade do |t|
     t.string "name"
     t.integer "volume", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "oscillators", force: :cascade do |t|
+    t.string "uuid"
+    t.float "frequency", default: 440.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

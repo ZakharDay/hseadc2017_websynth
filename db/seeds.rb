@@ -3,8 +3,9 @@
 
 def seed_data
   reset_db
-  create_cities
+  # create_cities
   # create_fxes
+  create_oscillators
 end
 
 def reset_db
@@ -38,6 +39,12 @@ def create_fxes
 
   fxes.each do |fx|
     Fx.create!(name: fx)
+  end
+end
+
+def create_oscillators
+  3.times do
+    Oscillator.create!(uuid: SecureRandom.uuid)
   end
 end
 

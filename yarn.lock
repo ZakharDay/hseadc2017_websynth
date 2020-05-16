@@ -7231,6 +7231,11 @@ unique-slug@^2.0.0:
   dependencies:
     imurmurhash "^0.1.4"
 
+unmute-ios-audio@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/unmute-ios-audio/-/unmute-ios-audio-3.0.0.tgz#4b9d222fc4548ace60bafbeceeb21d86db48abff"
+  integrity sha512-YgT9ah5j0wMkFPlCOmMe/Gaj8WLzrgJNsAG3Jo6Kmbtj7gGCcevHDW4ZsFzmzFnxk2VRn2BIkAmvUK75+H+78A==
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"

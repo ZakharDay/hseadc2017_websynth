@@ -8,7 +8,15 @@ export default class WeatherContainer extends Component {
     this.state = {
       error: '',
       cities: [],
-      autocomplete_cities: []
+      autocomplete_cities: [],
+      test: {
+        a: 1,
+        b: {
+          b1: 1,
+          b2: 2
+        },
+        c: 3
+      }
     }
 
     this.cityInput = React.createRef()
@@ -21,6 +29,7 @@ export default class WeatherContainer extends Component {
     this.saveWeatherData = this.saveWeatherData.bind(this)
     this.showError = this.showError.bind(this)
     this.eraseError = this.eraseError.bind(this)
+    this.mutateState = this.mutateState.bind(this)
   }
 
   handleInputChange() {
@@ -87,6 +96,22 @@ export default class WeatherContainer extends Component {
     })
   }
 
+  mutateState() {
+    // let { test } = this.state
+    // test.b.b1 = 9
+
+    this.setState({
+      test: {
+        a: this.state.test.a,
+        b: {
+          b1: this.state.test.b.b1,
+          b2: 9
+        },
+        c: this.state.test.c
+      }
+    })
+  }
+
   render() {
     let { error, cities, autocomplete_cities } = this.state
 
@@ -106,6 +131,13 @@ export default class WeatherContainer extends Component {
 
     return (
       <div className="WeatherContainer">
+        <div>{this.state.test.a}</div>
+        <div>{this.state.test.b.b1}</div>
+        <div>{this.state.test.b.b2}</div>
+        <div>{this.state.test.c}</div>
+        <br />
+        <div onClick={this.mutateState}>Mutate State</div>
+
         <input ref={this.cityInput} onChange={this.handleInputChange} />
 
         <ul>{autocompleteCityElements}</ul>

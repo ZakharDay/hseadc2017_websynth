@@ -1,0 +1,70 @@
+{
+  "a0cdf812-5602-3d2c-5348-fb9bcec4fc84": {
+    "id":         10,
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "8790b3d6-daf9-cf62-e4a6-f0c589c7f385": {
+    "id":         15,
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  }
+}
+
+{
+  "10": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "15": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  }
+}
+
+1. Создаётся осциллятор на клиенте
+
+{
+  "10": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "15": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "8790b3d6-daf9-cf62-e4a6-f0c589c7f385": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  }
+}
+
+2. Отправляется запрос создания осциллятора на сервер
+3. Клиент ждёт ответ
+4. Клиент получает ответ
+5. При положительном ответе осциллятору присваивается идентификатор с сервера
+
+{
+  "10": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "15": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  },
+  "20": {
+    "started":    false,
+    "connected":  false,
+    "oscillator": {}
+  }
+}
