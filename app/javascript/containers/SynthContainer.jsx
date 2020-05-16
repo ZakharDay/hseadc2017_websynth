@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import Oscillator from '../components/Oscillator'
 let unmuteAudio = require('unmute-ios-audio')
 
+let oscillators = {}
+
 export default class SynthContainer extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      oscillators: {}
+      oscs: oscillators
     }
 
     // let a = ['foo', 'bar', 'baz']
@@ -137,7 +139,7 @@ export default class SynthContainer extends Component {
   // }
 
   handleCreateSynthClick() {
-    let { audioContext, oscillators } = this.state
+    let { audioContext } = this.state
     let oscillator = audioContext.createOscillator()
     const frequency = 440
     const uuid = this.generateUUID()
@@ -159,8 +161,6 @@ export default class SynthContainer extends Component {
       .then(data => {
         console.log('Success:', data)
 
-        oscillators = this.state.oscillators
-
         oscillators[uuid] = {
           id: data.id,
           started: false,
@@ -169,7 +169,7 @@ export default class SynthContainer extends Component {
         }
 
         this.setState({
-          oscillators
+          oscs: oscillators
         })
       })
       .catch(error => {
@@ -184,13 +184,13 @@ export default class SynthContainer extends Component {
     }
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
   prepareSynthForRender(oscillatorData) {
     let { id, uuid, frequency } = oscillatorData
-    let { audioContext, oscillators } = this.state
+    let { audioContext } = this.state
     let oscillator = audioContext.createOscillator()
 
     oscillator.type = 'square'
@@ -204,12 +204,11 @@ export default class SynthContainer extends Component {
     }
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
   removeSynth(uuid) {
-    let { oscillators } = this.state
     let oscillator = oscillators[uuid]
 
     if (oscillator.connected == true) {
@@ -234,12 +233,12 @@ export default class SynthContainer extends Component {
     delete oscillators[uuid]
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
   startSynth(uuid) {
-    let { audioContext, oscillators } = this.state
+    let { audioContext } = this.state
     oscillators[uuid].oscillator.connect(audioContext.destination)
 
     if (oscillators[uuid].started == false) {
@@ -250,26 +249,25 @@ export default class SynthContainer extends Component {
     oscillators[uuid].connected = true
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
   stopSynth(uuid) {
-    let { audioContext, oscillators } = this.state
+    let { audioContext } = this.state
     oscillators[uuid].oscillator.disconnect(audioContext.destination)
     oscillators[uuid].connected = false
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
   changeFrequency(uuid, value) {
-    let { oscillators } = this.state
     oscillators[uuid].oscillator.frequency.value = value
 
     this.setState({
-      oscillators
+      oscs: oscillators
     })
   }
 
@@ -284,7 +282,6 @@ export default class SynthContainer extends Component {
   }
 
   render() {
-    const { oscillators } = this.state
     let oscillatorElements = []
 
     // oscillators.forEach((o, i) => {
