@@ -163,8 +163,8 @@ export default class SynthContainer extends Component {
 
         oscillators[uuid] = {
           id: data.id,
-          started: false,
-          connected: false,
+          started: oscillators[uuid].started,
+          connected: oscillators[uuid].connected,
           oscillator: oscillators[uuid].oscillator
         }
 
