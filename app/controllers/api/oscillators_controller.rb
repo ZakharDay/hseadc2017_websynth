@@ -15,9 +15,10 @@ class Api::OscillatorsController < Api::ApplicationController
   def create
     oscillator = Oscillator.new(frequency: params[:oscillator][:frequency], uuid: params[:oscillator][:uuid])
 
-    sleep 20
+    # sleep 20
 
     if oscillator.save
+      ActionCable.server.broadcast 'oscillators_channel', oscillator.as_json.to_json
       render json: oscillator
     else
       render json: oscillator.errors
@@ -26,9 +27,10 @@ class Api::OscillatorsController < Api::ApplicationController
 
   def destroy
     oscillator = Oscillator.find(params[:id])
+    uuid = oscillator.uuid
     oscillator.destroy
 
+    ActionCable.server.broadcast 'oscillators_channel', { uuid: uuid }.to_json
     render json: {}
-    # head :no_content
   end
 end

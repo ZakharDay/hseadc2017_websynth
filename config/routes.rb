@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     get 'temperature_analyser/find_cities', controller: 'temperature_analyser', action: 'find_cities'
   end
 
+  mount ActionCable.server => '/cable'
+
   get 'synthroom/index'
   get 'welcome/index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
