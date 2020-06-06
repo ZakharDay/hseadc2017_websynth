@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'monk/index'
+  resources :books
+  resources :categories
   namespace :api, format: :json do
     get 'oscillators/index'
     post 'oscillators' => 'oscillators#create'

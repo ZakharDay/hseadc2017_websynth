@@ -1,0 +1,33 @@
+.MonkContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 800px;
+
+  .Cell {
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    opacity: 0.8;
+    cursor: pointer;
+    text-align: center;
+    line-height: 100px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.monk::before {
+      content: '•';
+      display: block;
+      font-size: 100px;
+    }
+
+    &.white::before {
+      color: white;
+    }
+
+    &.black::before {
+      color: black;
+    }
+  }
+}
